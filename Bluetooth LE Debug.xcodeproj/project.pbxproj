@@ -1,0 +1,249 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		BA063ACF1C4462CD002F756B /* PDBluetoothLE.m in Sources */ = {isa = PBXBuildFile; fileRef = BA063ACE1C4462CD002F756B /* PDBluetoothLE.m */; };
+		BA6359471C404CF7003287AA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BA6359461C404CF7003287AA /* main.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		BA6359411C404CF7003287AA /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		BA063ACE1C4462CD002F756B /* PDBluetoothLE.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PDBluetoothLE.m; sourceTree = "<group>"; };
+		BA063AD01C4462DE002F756B /* PDBluetoothLE.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PDBluetoothLE.h; sourceTree = "<group>"; };
+		BA6359431C404CF7003287AA /* Bluetooth LE Debug */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Bluetooth LE Debug"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BA6359461C404CF7003287AA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		BA6359401C404CF7003287AA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		BA63593A1C404CF7003287AA = {
+			isa = PBXGroup;
+			children = (
+				BA6359451C404CF7003287AA /* Bluetooth LE Debug */,
+				BA6359441C404CF7003287AA /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		BA6359441C404CF7003287AA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BA6359431C404CF7003287AA /* Bluetooth LE Debug */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		BA6359451C404CF7003287AA /* Bluetooth LE Debug */ = {
+			isa = PBXGroup;
+			children = (
+				BA6359461C404CF7003287AA /* main.m */,
+				BA063AD01C4462DE002F756B /* PDBluetoothLE.h */,
+				BA063ACE1C4462CD002F756B /* PDBluetoothLE.m */,
+			);
+			path = "Bluetooth LE Debug";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		BA6359421C404CF7003287AA /* Bluetooth LE Debug */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BA63594A1C404CF7003287AA /* Build configuration list for PBXNativeTarget "Bluetooth LE Debug" */;
+			buildPhases = (
+				BA63593F1C404CF7003287AA /* Sources */,
+				BA6359401C404CF7003287AA /* Frameworks */,
+				BA6359411C404CF7003287AA /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Bluetooth LE Debug";
+			productName = "Bluetooth LE Debug";
+			productReference = BA6359431C404CF7003287AA /* Bluetooth LE Debug */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		BA63593B1C404CF7003287AA /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0630;
+				ORGANIZATIONNAME = "Podo Labs";
+				TargetAttributes = {
+					BA6359421C404CF7003287AA = {
+						CreatedOnToolsVersion = 6.3.2;
+					};
+				};
+			};
+			buildConfigurationList = BA63593E1C404CF7003287AA /* Build configuration list for PBXProject "Bluetooth LE Debug" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = BA63593A1C404CF7003287AA;
+			productRefGroup = BA6359441C404CF7003287AA /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				BA6359421C404CF7003287AA /* Bluetooth LE Debug */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		BA63593F1C404CF7003287AA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BA6359471C404CF7003287AA /* main.m in Sources */,
+				BA063ACF1C4462CD002F756B /* PDBluetoothLE.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		BA6359481C404CF7003287AA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		BA6359491C404CF7003287AA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		BA63594B1C404CF7003287AA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		BA63594C1C404CF7003287AA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		BA63593E1C404CF7003287AA /* Build configuration list for PBXProject "Bluetooth LE Debug" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BA6359481C404CF7003287AA /* Debug */,
+				BA6359491C404CF7003287AA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BA63594A1C404CF7003287AA /* Build configuration list for PBXNativeTarget "Bluetooth LE Debug" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BA63594B1C404CF7003287AA /* Debug */,
+				BA63594C1C404CF7003287AA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = BA63593B1C404CF7003287AA /* Project object */;
+}
