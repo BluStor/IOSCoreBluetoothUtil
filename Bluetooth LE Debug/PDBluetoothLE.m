@@ -98,10 +98,25 @@
     //NSString *filePath = [[NSBundle mainBundle] pathForResource:@"small" ofType:@"txt"];
     unsigned char command3[] = {0x03};
     unsigned char command4[] = {0x04};
+    unsigned char command2[] = {0x02};
     unsigned char command1[] = {0x01};
-    unsigned char hello[] = {72, 101, 108, 108, 111};
+    unsigned char filepath[] = "/device/btle.key";
+    unsigned char filepath_length = sizeof(filepath);
+    unsigned char hello[] = "hellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohello";
     unsigned int i = 0;
-    NSString *thePath = @"/Users/jacksonkeating/Downloads/smaller.txt";
+
+    NSMutableData *command = [NSMutableData dataWithBytes:command2 length:1];
+    [command appendBytes:&filepath_length length:1];
+    [command appendBytes:filepath length:filepath_length];
+    
+/*
+    NSMutableData *command = [NSMutableData dataWithBytes:command3 length:1];
+    [command appendBytes:&filepath_length length:1];
+    [command appendBytes:"/device/btle.key" length:filepath_length];
+    NSLog(@"Sending command: %@", command);
+ */
+    
+    NSString *thePath = @"/Users/jacksonkeating/Downloads/small.txt";
     NSLog(@"Found characteristic.");
     for (CBCharacteristic *characteristic in service.characteristics) {
         NSLog(@"Discovered characteristic %@", characteristic);
@@ -111,17 +126,19 @@
             self.blustorFileWriteCharacteristic = characteristic;
         }
     }
-    [peripheral writeValue:[NSData dataWithBytes:command3 length:1] forCharacteristic:self.blustorControlPointCharacteristic type:CBCharacteristicWriteWithoutResponse];
-    //while(i < 10000){
-        [peripheral writeValue:[NSData dataWithContentsOfFile:thePath] forCharacteristic:self.blustorFileWriteCharacteristic type:CBCharacteristicWriteWithoutResponse];
-      //  i+=20;
-    //}
+    //[peripheral readValueForCharacteristic:self.blustorControlPointCharacteristic];
+    [peripheral setNotifyValue:YES forCharacteristic:self.blustorControlPointCharacteristic];
+    [peripheral writeValue:command forCharacteristic:self.blustorControlPointCharacteristic type:CBCharacteristicWriteWithoutResponse];
+    
+/*
+    [peripheral writeValue:command forCharacteristic:self.blustorControlPointCharacteristic type:CBCharacteristicWriteWithoutResponse];
+    while(i < 10000){
+        [peripheral writeValue:[NSData dataWithBytes:hello length:sizeof(hello)] forCharacteristic:self.blustorFileWriteCharacteristic type:CBCharacteristicWriteWithoutResponse];
+        i+=20;
+    }
     [peripheral writeValue:[NSData dataWithBytes:command4 length:1] forCharacteristic:self.blustorControlPointCharacteristic type:CBCharacteristicWriteWithoutResponse];
     [peripheral writeValue:[NSData dataWithBytes:command1 length:1] forCharacteristic:self.blustorControlPointCharacteristic type:CBCharacteristicWriteWithoutResponse];
-    //NSLog(@"Reading value for characteristic %@", service.characteristics[0]);
-    //[peripheral readValueForCharacteristic:service.characteristics[0]];
-    //NSLog(@"Cancelling connection");
-    //[self.myCentralManager cancelPeripheralConnection:peripheral];
+*/
 }
 
 - (void)peripheral:(CBPeripheral *)peripheral
