@@ -3,6 +3,7 @@
 
 @interface PDBluetoothLE : NSObject <CBCentralManagerDelegate, CBPeripheralDelegate>
 
-- (void)startBluetoothLE;
+- (void)startBluetoothLE:(NSNumber *) cmd;
+- (void)sendCommand:(int) cmd;
 
 @end

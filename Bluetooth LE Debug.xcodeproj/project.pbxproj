@@ -61,8 +61,8 @@
 			isa = PBXGroup;
 			children = (
 				BA6359461C404CF7003287AA /* main.m */,
-				BA063AD01C4462DE002F756B /* PDBluetoothLE.h */,
 				BA063ACE1C4462CD002F756B /* PDBluetoothLE.m */,
+				BA063AD01C4462DE002F756B /* PDBluetoothLE.h */,
 			);
 			path = "Bluetooth LE Debug";
 			sourceTree = "<group>";
