@@ -31,8 +31,8 @@
 
 - (void)sendCommand:(int) cmd
 {
-    unsigned char command83[] = {0x08};
-    unsigned char command6[] = {0x06};  // Connection settings: high speed
+    unsigned char command8[] = {0x08};
+    unsigned char command6[] = {0x06};  // Connection settings: custom speed
     unsigned char command5[] = {0x05};  // Connection settings: low power
     unsigned char command3[] = {0x03};
     unsigned char command4[] = {0x04};
@@ -44,6 +44,7 @@
     unsigned char conn_interval[] = {8, 8};
     unsigned char hello[] = "hellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohello";
     unsigned int i = 0;
+    
     
     NSMutableData *command_download = [NSMutableData dataWithBytes:command2 length:1];
     [command_download appendBytes:&filepath_length length:1];
@@ -98,6 +99,17 @@
     else
     {
         NSLog(@"Error: device not connected");
+    }
+}
+
+- (void)userInput
+{
+    int cmd;
+    
+    while(1) {
+        NSLog(@"Command: ");
+        scanf("%d", &cmd);
+        [self sendCommand:cmd];
     }
 }
 
@@ -186,7 +198,6 @@
     didDiscoverCharacteristicsForService:(CBService *)service
                                     error:(NSError *)error
 {
-    int cmd;
 
     NSLog(@"Found characteristic.");
     for (CBCharacteristic *characteristic in service.characteristics) {
@@ -198,11 +209,10 @@
         }
     }
     
-    while(1) {
-        NSLog(@"Command: ");
-        scanf("%d", &cmd);
-        [self sendCommand:cmd];
-    }
+    
+    NSThread* btThread = [[NSThread alloc] initWithTarget:self selector:@selector(userInput) object:nil];
+    
+    [btThread start];
     
 }
 
