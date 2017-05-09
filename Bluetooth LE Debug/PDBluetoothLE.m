@@ -12,6 +12,7 @@
 @property CBCharacteristic *blustorControlPointCharacteristic;
 @property NSDate *startTime;
 @property NSNumber *app_command;
+@property NSUUID *cybergateMacUUID;
 
 @end
 
@@ -31,6 +32,8 @@
 
 - (void)sendCommand:(int) cmd
 {
+    unsigned char command10[] = {0x0A};
+    unsigned char command9[] = {0x09};
     unsigned char command8[] = {0x08};
     unsigned char command6[] = {0x06};  // Connection settings: custom speed
     unsigned char command5[] = {0x05};  // Connection settings: low power
@@ -40,6 +43,10 @@
     unsigned char command1[] = {0x01};
     unsigned char filepath[] = "/data/hello.txt";
     unsigned char filepath_length = sizeof(filepath);
+    unsigned char device_name[] = "JacksonGate";
+    unsigned char device_name_length = sizeof(device_name);
+    unsigned char local_password[] = "Hell0h0wdy";
+    unsigned char local_password_length = sizeof(local_password);
     unsigned char conn_interval_cmd_len = 2;
     unsigned char conn_interval[] = {8, 8};
     unsigned char hello[] = "hellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohello";
@@ -61,6 +68,14 @@
     NSMutableData *command_conn_interval = [NSMutableData dataWithBytes:command6 length:1];
     [command_conn_interval appendBytes:&conn_interval_cmd_len length:1];
     [command_conn_interval appendBytes:conn_interval length:conn_interval_cmd_len];
+
+    NSMutableData *command_rename = [NSMutableData dataWithBytes:command9 length:1];
+    [command_rename appendBytes:&device_name_length length:1];
+    [command_rename appendBytes:device_name length:device_name_length];
+    
+    NSMutableData *command_store_password = [NSMutableData dataWithBytes:command9 length:1];
+    [command_store_password appendBytes:&local_password_length length:1];
+    [command_store_password appendBytes:local_password length:local_password_length];
     
     if(self.blustorPeripheral.state == 2)
     {
@@ -94,6 +109,22 @@
         {
             NSLog(@"Delete active file");
             [self.blustorPeripheral writeValue:command_delete forCharacteristic:self.blustorControlPointCharacteristic type:CBCharacteristicWriteWithoutResponse];
+        }
+        else if(cmd == 5)
+        {
+            NSLog(@"Rename card");
+            [self.blustorPeripheral writeValue:command_rename
+                             forCharacteristic:self.blustorControlPointCharacteristic type:CBCharacteristicWriteWithoutResponse];
+        }
+        else if(cmd == 6)
+        {
+            NSLog(@"Store password");
+            [self.blustorPeripheral writeValue:command_store_password
+                             forCharacteristic:self.blustorControlPointCharacteristic type:CBCharacteristicWriteWithoutResponse];
+        }
+        else if(cmd == 7)
+        {
+            [self.myCentralManager cancelPeripheralConnection:self.blustorPeripheral];
         }
     }
     else
@@ -139,13 +170,16 @@
      advertisementData:(NSDictionary *)advertisementData
                   RSSI:(NSNumber *)RSSI
 {
-    if([[peripheral name] isEqual:@"CGATELE0898"])
-    {
+    //if([[peripheral name] isEqual:@"CGATELE0898"])
+    //{
         NSLog(@"Cybergate Card found");
 
+    if(RSSI.intValue > -70){
+        NSLog(@"In range!");
         self.blustorPeripheral = peripheral;
         self.blustorPeripheral.delegate = self;
-    
+        NSLog(@"RSSI: %@", RSSI);
+        
         [self.myCentralManager connectPeripheral:self.blustorPeripheral options:nil];
         [self.myCentralManager stopScan];
         NSLog(@"Scanning stopped");
@@ -208,7 +242,6 @@
             self.blustorFileWriteCharacteristic = characteristic;
         }
     }
-    
     
     NSThread* btThread = [[NSThread alloc] initWithTarget:self selector:@selector(userInput) object:nil];
     
