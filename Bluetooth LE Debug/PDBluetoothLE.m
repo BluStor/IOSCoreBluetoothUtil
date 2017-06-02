@@ -48,8 +48,9 @@
     unsigned char local_password[] = "Hell0h0wdy";
     unsigned char local_password_length = sizeof(local_password);
     unsigned char conn_interval_cmd_len = 2;
-    unsigned char conn_interval[] = {8, 8};
+    unsigned char conn_interval[] = {30, 30};
     unsigned char hello[] = "hellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohellohello";
+    //unsigned char hello[] = "1234";
     unsigned int i = 0;
     
     
@@ -64,6 +65,10 @@
     NSMutableData *command_upload = [NSMutableData dataWithBytes:command3 length:1];
     [command_upload appendBytes:&filepath_length length:1];
     [command_upload appendBytes:filepath length:filepath_length];
+    
+    NSMutableData *command_srft = [NSMutableData dataWithBytes:command4 length:1];
+    [command_srft appendBytes:&filepath_length length:1];
+    [command_srft appendBytes:filepath length:filepath_length];
     
     NSMutableData *command_conn_interval = [NSMutableData dataWithBytes:command6 length:1];
     [command_conn_interval appendBytes:&conn_interval_cmd_len length:1];
@@ -100,8 +105,7 @@
                 [self.blustorPeripheral writeValue:[NSData dataWithBytes:hello length:sizeof(hello)] forCharacteristic:self.blustorFileWriteCharacteristic type:CBCharacteristicWriteWithoutResponse];
                 i+=20;
             }
-            [self.blustorPeripheral writeValue:[NSData dataWithBytes:command4 length:1] forCharacteristic:self.blustorControlPointCharacteristic type:CBCharacteristicWriteWithoutResponse];
-            //[self.blustorPeripheral writeValue:[NSData dataWithBytes:command1 length:1] forCharacteristic:self.blustorControlPointCharacteristic type:CBCharacteristicWriteWithoutResponse];
+            [self.blustorPeripheral writeValue:command_srft forCharacteristic:self.blustorControlPointCharacteristic type:CBCharacteristicWriteWithoutResponse];
             NSTimeInterval timeInterval = [self.startTime timeIntervalSinceNow];
             NSLog(@"File transfer time: %f", timeInterval);
         }
@@ -125,6 +129,11 @@
         else if(cmd == 7)
         {
             [self.myCentralManager cancelPeripheralConnection:self.blustorPeripheral];
+        }
+        else if(cmd == 8)
+        {
+            NSLog(@"Read CRC16");
+            [self.blustorPeripheral readValueForCharacteristic:self.blustorFileWriteCharacteristic];
         }
     }
     else
@@ -174,7 +183,7 @@
     //{
         NSLog(@"Cybergate Card found");
 
-    if(RSSI.intValue > -70){
+    if(RSSI.intValue > -80){
         NSLog(@"In range!");
         self.blustorPeripheral = peripheral;
         self.blustorPeripheral.delegate = self;
