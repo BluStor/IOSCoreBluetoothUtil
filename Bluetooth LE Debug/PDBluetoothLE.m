@@ -32,6 +32,7 @@
 
 - (void)sendCommand:(int) cmd
 {
+    unsigned char command11[] = {0x0B};
     unsigned char command10[] = {0x0A};
     unsigned char command9[] = {0x09};
     unsigned char command8[] = {0x08};
@@ -41,11 +42,11 @@
     unsigned char command4[] = {0x04};
     unsigned char command2[] = {0x02};
     unsigned char command1[] = {0x01};
-    unsigned char filepath[] = "/data/hello.txt";
+    unsigned char filepath[] = "/data/hello2.txt";
     unsigned char filepath_length = sizeof(filepath);
-    unsigned char device_name[] = "JacksonGate";
+    unsigned char device_name[] = "BrooksGate";
     unsigned char device_name_length = sizeof(device_name);
-    unsigned char local_password[] = "Hell0h0wdy";
+    unsigned char local_password[] = "Blust0r";
     unsigned char local_password_length = sizeof(local_password);
     unsigned char conn_interval_cmd_len = 2;
     unsigned char conn_interval[] = {30, 30};
@@ -53,6 +54,7 @@
     //unsigned char hello[] = "1234";
     unsigned int i = 0;
     
+    NSMutableData *command_enable_edr = [NSMutableData dataWithBytes:command1 length:1];
     
     NSMutableData *command_download = [NSMutableData dataWithBytes:command2 length:1];
     [command_download appendBytes:&filepath_length length:1];
@@ -81,6 +83,14 @@
     NSMutableData *command_store_password = [NSMutableData dataWithBytes:command9 length:1];
     [command_store_password appendBytes:&local_password_length length:1];
     [command_store_password appendBytes:local_password length:local_password_length];
+
+    NSMutableData *command_status = [NSMutableData dataWithBytes:command10 length:1];
+    [command_status appendBytes:&filepath_length length:1];
+    [command_status appendBytes:filepath length:filepath_length];
+    
+    NSMutableData *command_size = [NSMutableData dataWithBytes:command11 length:1];
+    [command_size appendBytes:&filepath_length length:1];
+    [command_size appendBytes:filepath length:filepath_length];
     
     if(self.blustorPeripheral.state == 2)
     {
@@ -135,6 +145,28 @@
             NSLog(@"Read CRC16");
             [self.blustorPeripheral readValueForCharacteristic:self.blustorFileWriteCharacteristic];
         }
+        else if(cmd == 9)
+        {
+            NSLog(@"Open temp file");
+            [self.blustorPeripheral writeValue:command_upload forCharacteristic:self.blustorControlPointCharacteristic type:CBCharacteristicWriteWithoutResponse];
+        }
+        else if(cmd == 10)
+        {
+            NSLog(@"Read file status");
+            [self.blustorPeripheral writeValue:command_status forCharacteristic:self.blustorControlPointCharacteristic type:CBCharacteristicWriteWithoutResponse];
+        }
+        else if(cmd == 11)
+        {
+            NSLog(@"Read file size");
+            [self.blustorPeripheral writeValue:command_size forCharacteristic:self.blustorControlPointCharacteristic type:CBCharacteristicWriteWithoutResponse];
+            
+        }
+        else if(cmd == 12)
+        {
+            NSLog(@"Enable EDR");
+            [self.blustorPeripheral writeValue:command_enable_edr forCharacteristic:self.blustorControlPointCharacteristic type:CBCharacteristicWriteWithoutResponse];
+        }
+
     }
     else
     {
@@ -183,7 +215,7 @@
     //{
         NSLog(@"Cybergate Card found");
 
-    if(RSSI.intValue > -80){
+    if(RSSI.intValue > -75){
         NSLog(@"In range!");
         self.blustorPeripheral = peripheral;
         self.blustorPeripheral.delegate = self;
