@@ -32,6 +32,9 @@
 
 - (void)sendCommand:(int) cmd
 {
+    unsigned char command15[] = {0x0F};
+    unsigned char command14[] = {0x0E};
+    unsigned char command13[] = {0x0D};
     unsigned char command11[] = {0x0B};
     unsigned char command10[] = {0x0A};
     unsigned char command9[] = {0x09};
@@ -42,9 +45,9 @@
     unsigned char command4[] = {0x04};
     unsigned char command2[] = {0x02};
     unsigned char command1[] = {0x01};
-    unsigned char filepath[] = "/data/hello2.txt";
+    unsigned char filepath[] = "/device/log.0";
     unsigned char filepath_length = sizeof(filepath);
-    unsigned char device_name[] = "BrooksGate";
+    unsigned char device_name[] = "bluster";
     unsigned char device_name_length = sizeof(device_name);
     unsigned char local_password[] = "Blust0r";
     unsigned char local_password_length = sizeof(local_password);
@@ -55,6 +58,12 @@
     unsigned int i = 0;
     
     NSMutableData *command_enable_edr = [NSMutableData dataWithBytes:command1 length:1];
+    
+    NSMutableData *command_disc_le = [NSMutableData dataWithBytes:command13 length:1];
+
+    NSMutableData *command_burn_in = [NSMutableData dataWithBytes:command14 length:1];
+
+    NSMutableData *command_fw_ver = [NSMutableData dataWithBytes:command15 length:1];
     
     NSMutableData *command_download = [NSMutableData dataWithBytes:command2 length:1];
     [command_download appendBytes:&filepath_length length:1];
@@ -76,7 +85,7 @@
     [command_conn_interval appendBytes:&conn_interval_cmd_len length:1];
     [command_conn_interval appendBytes:conn_interval length:conn_interval_cmd_len];
 
-    NSMutableData *command_rename = [NSMutableData dataWithBytes:command9 length:1];
+    NSMutableData *command_rename = [NSMutableData dataWithBytes:command8 length:1];
     [command_rename appendBytes:&device_name_length length:1];
     [command_rename appendBytes:device_name length:device_name_length];
     
@@ -108,7 +117,6 @@
         else if(cmd == 3)
         {
             NSLog(@"Upload to filepath");
-            [self.blustorPeripheral writeValue:command_conn_interval forCharacteristic:self.blustorControlPointCharacteristic type:CBCharacteristicWriteWithoutResponse];
             [self.blustorPeripheral writeValue:command_upload forCharacteristic:self.blustorControlPointCharacteristic type:CBCharacteristicWriteWithoutResponse];
             self.startTime = [NSDate date];
             while(i < 5000){
@@ -166,7 +174,27 @@
             NSLog(@"Enable EDR");
             [self.blustorPeripheral writeValue:command_enable_edr forCharacteristic:self.blustorControlPointCharacteristic type:CBCharacteristicWriteWithoutResponse];
         }
-
+        else if(cmd == 13)
+        {
+            NSLog(@"Send SRFT");
+            [self.blustorPeripheral writeValue:command_srft forCharacteristic:self.blustorControlPointCharacteristic type:CBCharacteristicWriteWithoutResponse];
+        }
+        else if(cmd == 14)
+        {
+            NSLog(@"Disconnect LE");
+            [self.blustorPeripheral writeValue:command_disc_le forCharacteristic:self.blustorControlPointCharacteristic type:CBCharacteristicWriteWithoutResponse];
+        }
+        else if(cmd == 15)
+        {
+            NSLog(@"Burn in");
+            [self.blustorPeripheral writeValue:command_burn_in forCharacteristic:self.blustorControlPointCharacteristic type:CBCharacteristicWriteWithoutResponse];
+        }
+        else if(cmd == 16)
+        {
+            NSLog(@"Get fw ver");
+            [self.blustorPeripheral setNotifyValue:YES forCharacteristic:self.blustorControlPointCharacteristic];
+            [self.blustorPeripheral writeValue:command_fw_ver forCharacteristic:self.blustorControlPointCharacteristic type:CBCharacteristicWriteWithoutResponse];
+        }
     }
     else
     {
@@ -215,7 +243,7 @@
     //{
         NSLog(@"Cybergate Card found");
 
-    if(RSSI.intValue > -75){
+    if(RSSI.intValue > -65){
         NSLog(@"In range!");
         self.blustorPeripheral = peripheral;
         self.blustorPeripheral.delegate = self;
